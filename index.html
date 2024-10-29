@@ -171,20 +171,25 @@
             <button onclick="fetchUsers()">Refresh</button>
         </div>
 
- <div style=" margin-bottom: 40px; ">
-        <label>
-            <input type="checkbox" id="filterCommission" onclick="applyFilters()" />
-            Users with Commission Earned
-        </label>
-        <label>
-            <input type="checkbox" id="filterDeposit" onclick="applyFilters()" />
-            Users with Deposits
-        </label>
-        <label>
-            <input type="checkbox" id="filterWithdrawAddress" onclick="applyFilters()" />
-            Users with Withdraw Address
-        </label>
-    </div>
+<div style="margin-bottom: 40px; display: flex; flex-wrap: wrap; gap: 10px;">
+    <label style="font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="filterCommission" onclick="applyFilters()" style="width: 16px; height: 16px; cursor: pointer;" />
+        Users with Unpaid Commissions
+    </label>
+    <label style="font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="filterDeposit" onclick="applyFilters()" style="width: 16px; height: 16px; cursor: pointer;" />
+        Users with Deposits
+    </label>
+    <label style="font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="filterWithdrawAddress" onclick="applyFilters()" style="width: 16px; height: 16px; cursor: pointer;" />
+        Users with Withdraw Address
+    </label>
+    <label style="font-size: 14px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <input type="checkbox" id="filtertotalReferrals" onclick="applyFilters()" style="width: 16px; height: 16px; cursor: pointer;" />
+        Users with Referrals
+    </label>
+</div>
+
 
 
         <div id="userList"></div>
@@ -339,6 +344,7 @@ function applyFilters() {
     const filterCommission = document.getElementById("filterCommission").checked;
     const filterDeposit = document.getElementById("filterDeposit").checked;
     const filterWithdrawAddress = document.getElementById("filterWithdrawAddress").checked;
+    const filtertotalReferrals = document.getElementById("filtertotalReferrals").checked;
 
     let filteredUsers = allUsers;
 
@@ -350,6 +356,9 @@ function applyFilters() {
     }
     if (filterWithdrawAddress) {
         filteredUsers = filteredUsers.filter(user => user.withdrawAddress && user.withdrawAddress.trim() !== "");
+    }
+    if (filtertotalReferrals) {
+        filteredUsers = filteredUsers.filter(user => user.totalReferrals > 0);
     }
 
     renderUsers(filteredUsers);
